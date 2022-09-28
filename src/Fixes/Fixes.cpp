@@ -8,31 +8,34 @@
 
 namespace Fixes
 {
+
+	// any fixes that use addresses not currently correctly in the vr address library are comment out.
+	// in other words, all of them currently
 	void PreInit()
 	{
 		Settings::load();
 
 		if (*Settings::ActorIsHostileToActor) {
-			ActorIsHostileToActorFix::Install();
+			//ActorIsHostileToActorFix::Install();
 		}
 
 		if (*Settings::CellInit) {
-			CellInitFix::Install();
+			//CellInitFix::Install();
 		}
 
 		if (*Settings::FaderMenu) {
-			FaderMenuFix::Install();
+			//FaderMenuFix::Install();
 		}
 
 		if (*Settings::SafeExit) {
-			SafeExit::Install();
+			//SafeExit::Install();
 		}
 	}
 
 	void PostInit()
 	{
 		if (*Settings::EncounterZoneReset) {
-			EncounterZoneResetFix::Install();
+			//EncounterZoneResetFix::Install();
 		}
 	}
 }

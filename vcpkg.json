@@ -4,6 +4,7 @@
   "description": "A crash reporting and bug fixing plugin for Fallout 4",
   "homepage": "https://github.com/Ryan-rsm-McKenzie/Buffout4",
   "license": "MIT",
+  "supports": "windows & x64",
   "dependencies": [
     "boost-algorithm",
     "boost-atomic",

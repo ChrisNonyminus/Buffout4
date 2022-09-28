@@ -87,13 +87,14 @@ namespace Crash
 					.length());
 		}
 
-		[[nodiscard]] std::string get_format(std::size_t a_nameWidth) const noexcept
+		[[nodiscard]] auto get_format(std::size_t a_nameWidth) const noexcept
 		{
-			return "\t[{:>"s +
+			return ("\t[{:>"s +
 				   get_size_string(_frames.size()) +
 				   "}] 0x{:012X} {:>"s +
 				   fmt::to_string(a_nameWidth) +
-				   "}{}"s;
+					"}{}")
+				.c_str();
 		}
 
 		void print_probable_callstack(
@@ -119,8 +120,7 @@ namespace Crash
 					moduleStack.push_back(nullptr);
 				}
 			}
-
-			const auto format = get_format([&]() noexcept {
+			size_t fmtsize = [&]() noexcept {
 				std::size_t max = 0;
 				std::for_each(
 					moduleStack.begin(),
@@ -129,7 +129,8 @@ namespace Crash
 						max = a_elem ? std::max(max, a_elem->name().length()) : max;
 					});
 				return max;
-			}());
+			}();
+			auto format = fmt::runtime(get_format(fmtsize));
 
 			for (std::size_t i = 0; i < _frames.size(); ++i) {
 				const auto mod = moduleStack[i];
@@ -148,14 +149,11 @@ namespace Crash
 			assert(a_log != nullptr);
 			a_log->critical("RAW CALL STACK:");
 
-			const auto format =
-				"\t[{:>"s +
-				get_size_string(_stacktrace.size()) +
-				"}] 0x{:X}"s;
-
 			for (std::size_t i = 0; i < _stacktrace.size(); ++i) {
 				a_log->critical(
-					format,
+					fmt::runtime("\t[{:>"s +
+								 get_size_string(_stacktrace.size()) +
+								 "}] 0x{:X}"),
 					i,
 					reinterpret_cast<std::uintptr_t>(_stacktrace[i].address()));
 			}
@@ -194,7 +192,7 @@ namespace Crash
 #define EXCEPTION_CASE(a_code)                                               \
 	case a_code:                                                             \
 		a_log->critical(                                                     \
-			FMT_STRING("Unhandled exception \"{}\" at 0x{:X}"),              \
+			fmt::runtime("Unhandled exception \"{}\" at 0x{:X}"),              \
 			#a_code##sv,                                                     \
 			reinterpret_cast<std::uintptr_t>(a_exception.ExceptionAddress)); \
 		break
@@ -262,7 +260,7 @@ namespace Crash
 
 		for (const auto& mod : a_modules) {
 			a_log->critical(
-				format,
+				fmt::runtime(format),
 				mod->name(),
 				mod->address());
 		}
@@ -285,7 +283,7 @@ namespace Crash
 
 			for (const auto file : files) {
 				a_log->critical(
-					fileFormat,
+					fmt::runtime(fileFormat),
 					file->GetCompileIndex(),
 					"",
 					file->GetFilename());
@@ -293,7 +291,7 @@ namespace Crash
 
 			for (const auto file : smallfiles) {
 				a_log->critical(
-					FMT_STRING("\t[FE:{:>03X}] {}"),
+					fmt::runtime("\t[FE:{:>03X}] {}"),
 					file->GetSmallFileCompileIndex(),
 					file->GetFilename());
 			}
@@ -335,7 +333,7 @@ namespace Crash
 		for (std::size_t i = 0; i < regs.size(); ++i) {
 			const auto& [name, reg] = regs[i];
 			a_log->critical(
-				FMT_STRING("\t{:<3} 0x{:<16X} {}"),
+				fmt::runtime("\t{:<3} 0x{:<16X} {}"),
 				name,
 				reg,
 				analysis[i]);
@@ -375,7 +373,7 @@ namespace Crash
 						a_modules);
 				for (const auto& data : analysis) {
 					a_log->critical(
-						format,
+						fmt::runtime(format),
 						idx * sizeof(std::size_t),
 						stack[idx],
 						data);

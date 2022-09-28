@@ -121,7 +121,7 @@ set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_STATIC_RUNTIME ON)
 set(Boost_USE_DEBUG_RUNTIME ON)
 
-add_subdirectory($ENV{CommonLibF4Path} CommonLibF4)
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../CommonLibF4/CommonLibF4" CommonLibF4)
 
 find_package(Boost
 	REQUIRED
@@ -169,7 +169,7 @@ set_property(
 		Buffout4
 		CommonLibF4
 	PROPERTY
-		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
 )
 
 target_compile_features(Buffout4

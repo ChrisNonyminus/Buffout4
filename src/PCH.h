@@ -111,8 +111,8 @@ namespace logger
 namespace stl
 {
 	using F4SE::stl::report_and_fail;
-	using F4SE::stl::span;
-	using F4SE::util::adjust_pointer;
+	using std::span;
+	using F4SE::stl::adjust_pointer;
 
 	template <class, class = void>
 	struct iter_reference;

@@ -7,7 +7,7 @@ bool g_preloaded = false;
 void F4SEAPI MessageHandler(F4SE::MessagingInterface::Message* a_message)
 {
 	switch (a_message->type) {
-	case F4SE::MessagingInterface::kGameDataReady:
+	case F4SE::MessagingInterface::kGameLoaded:
 		Fixes::PostInit();
 		break;
 	}
@@ -32,13 +32,21 @@ void OpenLog()
 #ifndef NDEBUG
 	log->set_level(spdlog::level::trace);
 #else
-	log->set_level(spdlog::level::info);
-	log->flush_on(spdlog::level::warn);
+	log->set_level(spdlog::level::trace);
+	log->flush_on(spdlog::level::trace);
 #endif
 
 	spdlog::set_default_logger(std::move(log));
 	spdlog::set_pattern("%g(%#): [%^%l%$] %v"s);
 }
+
+//extern "C" DLLEXPORT void Initialize(void)
+//{
+//	OpenLog();
+//	F4SE::AllocTrampoline(1 << 7);
+//	Patches::Preload();
+//	g_preloaded = true;
+//}
 
 extern "C" DLLEXPORT int __stdcall DllMain(void*, unsigned long a_reason, void*)
 {
@@ -72,7 +80,7 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 	}
 
 	const auto ver = a_f4se->RuntimeVersion();
-	if (ver < F4SE::RUNTIME_1_10_162) {
+	if (/*ver < F4SE::RUNTIME_VR_1_2_72*/ false) { // todo
 		logger::critical("unsupported runtime v{}"sv, ver.string());
 		return false;
 	}

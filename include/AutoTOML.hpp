@@ -15,7 +15,7 @@ namespace AutoTOML
 	using boolean_t = bool;
 	using float_t = double;
 	using integer_t = std::int64_t;
-	using string_t = toml::string;
+	using string_t = std::string;
 
 	class ISetting
 	{
