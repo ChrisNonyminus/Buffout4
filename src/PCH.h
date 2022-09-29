@@ -113,6 +113,9 @@ namespace stl
 	using F4SE::stl::report_and_fail;
 	using std::span;
 	using F4SE::stl::adjust_pointer;
+	
+
+	void asm_jump(std::uintptr_t a_from, std::size_t a_size, std::uintptr_t a_to);
 
 	template <class, class = void>
 	struct iter_reference;

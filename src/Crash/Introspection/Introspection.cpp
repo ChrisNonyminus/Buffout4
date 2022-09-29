@@ -542,7 +542,7 @@ namespace Crash::Introspection
 					return Pointer{ a_ptr, a_modules };
 				}
 
-				if (_stricmp(mod->name().data(), "Fallout4.exe") == 0) {
+				if (_stricmp(mod->name().data(), "Fallout4VR.exe") == 0) {
 					return F4Polymorphic{ typeDesc->mangled_name(), col, a_ptr };
 				} else {
 					return Polymorphic{ typeDesc->mangled_name() };

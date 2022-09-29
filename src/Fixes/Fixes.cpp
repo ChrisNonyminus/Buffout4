@@ -15,27 +15,15 @@ namespace Fixes
 	{
 		Settings::load();
 
-		if (*Settings::ActorIsHostileToActor) {
-			//ActorIsHostileToActorFix::Install();
-		}
-
-		if (*Settings::CellInit) {
-			//CellInitFix::Install();
-		}
-
-		if (*Settings::FaderMenu) {
-			//FaderMenuFix::Install();
-		}
-
-		if (*Settings::SafeExit) {
-			//SafeExit::Install();
-		}
 	}
 
 	void PostInit()
 	{
-		if (*Settings::EncounterZoneReset) {
-			//EncounterZoneResetFix::Install();
+	}
+	void Preload()
+	{
+		if (*Settings::UnalignedLoad) {
+			UnalignedLoadFix::Install();
 		}
 	}
 }

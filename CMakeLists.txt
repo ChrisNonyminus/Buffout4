@@ -8,6 +8,13 @@ project(
 	LANGUAGES CXX
 )
 
+option(BUILD_FALLOUTVR "Build for Fallout 4 VR" OFF)
+
+if (NOT BUILD_FALLOUTVR)
+else()
+	add_compile_definitions(FALLOUTVR=1)
+endif()
+
 configure_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/cmake/Version.h.in
 	${CMAKE_CURRENT_BINARY_DIR}/include/Version.h

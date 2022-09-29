@@ -28,15 +28,10 @@ public:
 		}
 	}
 
-	static inline bSetting ActorIsHostileToActor{ "Fixes"s, "ActorIsHostileToActor"s, true };
-	static inline bSetting CellInit{ "Fixes"s, "CellInit"s, true };
-	static inline bSetting EncounterZoneReset{ "Fixes"s, "EncounterZoneReset"s, true };
-	static inline bSetting FaderMenu{ "Fixes"s, "FaderMenu"s, true };
-	static inline bSetting SafeExit{ "Fixes"s, "SafeExit"s, true };
+	static inline bSetting UnalignedLoad{ "Fixes"s, "UnalignedLoad"s, true };
 
 	static inline bSetting MemoryManager{ "Patches"s, "MemoryManager"s, true };
-	static inline bSetting ScaleformAllocator{ "Patches"s, "ScaleformAllocator"s, true };
-	static inline bSetting SmallBlockAllocator{ "Patches"s, "SmallBlockAllocator"s, true };
+	static inline bSetting MemoryManagerDebug{ "Patches"s, "MemoryManagerDebug"s, false };
 
 private:
 	Settings() = delete;

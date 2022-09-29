@@ -9,15 +9,8 @@ namespace Patches
 	void Preload()
 	{
 		if (*Settings::MemoryManager) {
-			//MemoryManagerPatch::Install();
+			MemoryManagerPatch::Install();
 		}
 
-		if (*Settings::ScaleformAllocator) {
-			//ScaleformAllocatorPatch::Install();
-		}
-
-		if (*Settings::SmallBlockAllocator) {
-			//SmallBlockAllocatorPatch::Install();
-		}
 	}
 }
